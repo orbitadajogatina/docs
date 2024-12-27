@@ -5,7 +5,7 @@
     "light": "/assets/logo-with-text-alternative.png",
     "dark": "/assets/logo-with-text.png"
   },
-  "favicon": "/assets/favicon.ico",
+  "favicon": "/assets/favicon.png",
   "colors": {
     "light": "#28caa3",
     "primary": "#197e66",
