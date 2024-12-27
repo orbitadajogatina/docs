@@ -1,8 +1,11 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Pergunta do Dia API",
-  "logo": "/assets/logo-no-background.png",
-  "favicon": "/assets/favicon.png",
+  "logo": {
+    "light": "/assets/logo-with-text-alternative.png",
+    "dark": "/assets/logo-with-text.png"
+  },
+  "favicon": "/assets/favicon.ico",
   "colors": {
     "light": "#28caa3",
     "primary": "#197e66",
@@ -27,7 +30,7 @@
       ]
     },
     {
-      "group": "Endpoints",
+      "group": "Rotas",
       "pages": [
         "api-reference/endpoint/get",
         "api-reference/endpoint/create",
