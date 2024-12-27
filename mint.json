@@ -18,12 +18,6 @@
     "name": "Gerenciar chave",
     "url": "https://pergunta-do-dia.onrender.com/api"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
   "navigation": [
     {
       "group": "Documentação da API",
