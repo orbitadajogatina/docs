@@ -1,29 +1,22 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
-  "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
-  },
-  "favicon": "/favicon.svg",
+  "name": "Pergunta do Dia API",
+  "logo": "/assets/logo-no-background.png",
+  "favicon": "/assets/favicon.png",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
-    "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
-    }
+    "primary": "#28caa3",
+    "light": "#197e66",
+    "dark": "#1d9679"
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "name": "Thread no PowerPoint Discord",
+      "url": "https://discord.com/channels/748147574481092617/1050939956341772348"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Gerenciar chave",
+    "url": "https://pergunta-do-dia.onrender.com/api"
   },
   "tabs": [
     {
@@ -31,51 +24,16 @@
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Documentação da API",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "api-reference/introduction",
+        "api-reference/auth"
       ]
     },
     {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
+      "group": "Endpoints",
       "pages": [
         "api-reference/endpoint/get",
         "api-reference/endpoint/create",
@@ -84,8 +42,7 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "discord": "https://discord.com/channels/748147574481092617/1050939956341772348",
+    "github": "https://github.com/orbitadajogatina/pergunta-do-dia"
   }
 }
