@@ -4,8 +4,8 @@
   "logo": "/assets/logo-no-background.png",
   "favicon": "/assets/favicon.png",
   "colors": {
-    "primary": "#28caa3",
-    "light": "#197e66",
+    "light": "#28caa3",
+    "primary": "#197e66",
     "dark": "#1d9679"
   },
   "topbarLinks": [
