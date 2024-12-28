@@ -25,12 +25,20 @@
     {
       "group": "Documentação da API",
       "pages": [
-        "api-reference/introduction",
-        "api-reference/auth"
+        "introduction",
+        "auth"
       ]
     },
     {
-      "group": "Rotas",
+      "group": "Perguntas",
+      "pages": [
+        "api-reference/endpoint/get-questions",
+        "api-reference/endpoint/create",
+        "api-reference/endpoint/delete"
+      ]
+    },
+    {
+      "group": "Estatísticas",
       "pages": [
         "api-reference/endpoint/get-questions",
         "api-reference/endpoint/create",
