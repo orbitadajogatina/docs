@@ -1,33 +1,18 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Autenticação'
+description: 'Quem é você?'
 ---
 
+## Obter uma chave
+Qualquer pessoa pode obter uma chave. Basta ir até o bot e utilizar o comando `/token`. Guarde a chave, pois caso você a perca, será necessário obter uma nova.
+<img src="/assets/step1.png"/>
+No momento, a chave tem formato `uuid`, entretanto, em breve será JWT. Quando essa mudança ocorrer, todos os desenvolvedores serão avisados.
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  Observe que, ao usar o comando, seu token antigo ficará inutilizável. Ou seja, todas as aplicações que o utilizavam não funcionarão até que você substitua para o novo token informado na mensagem do bot. Isso pode ser útil caso você tenha vazado sua chave ou tenha outro problema com ela.
 </Note>
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+## Utilizando a chave
+Agora que já tem uma, lembre-se de sempre informá-la no header `Authorization` de todos os requests que você fizer.
+| Header | Valor |
+|--------|--------|
+| Authorization | `chave obtida` |

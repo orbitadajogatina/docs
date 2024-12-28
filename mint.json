@@ -41,5 +41,10 @@
   "footerSocials": {
     "discord": "https://discord.com/channels/748147574481092617/1050939956341772348",
     "github": "https://github.com/orbitadajogatina/pergunta-do-dia"
+  },
+  "api": {
+    "auth": {
+        "method": "basic"
+    }
   }
 }

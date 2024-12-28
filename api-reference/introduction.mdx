@@ -1,33 +1,23 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Introdução'
+description: 'Entenda o básico da API do bot Pergunta do Dia.'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+<img
+  className="mx-auto"
+  src="/assets/logo-with-background.png"
+  alt="Hero Light"
+/>
 
-## Welcome
+Bem-vindo a primeira versão da API do bot Pergunta do Dia! É aqui que você vai encontrar a lista de rotas disponíveis na API feita para interagir com o banco de dados do bot Pergunta do Dia. Será necessário um conhecimento básico sobre requests para entender essa documentação. Se você precisa de ajuda, por favor, tire dúvidas na thread do projeto! 
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+### Antes de começar...
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+- O URL base da API é `https://pergunta-do-dia.onrender.com/api/v1`.
+- Algumas rotas usam [Snowflakes](https://discord.com/developers/docs/reference#snowflakes), por conta do Discord.
+- Eis o significado de cada status de perguntas:
+  - 0: Aguardando revisão de um administrador;
+  - 1: Recusada por um adminstrador; 
+  - 2: Aprovada por um adminstrador; 
+  - 3: Perguntada já enviada pelo bot.
+- Para obter uma chave, acompanhe as instruções da seção Autenticação.

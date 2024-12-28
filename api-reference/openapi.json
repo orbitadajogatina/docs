@@ -1,16 +1,13 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
+    "title": "Pergunta do Dia Bot API",
+    "description": "Uma API para interagir com o banco de dados do bot Pergunta do Dia.",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://pergunta-do-dia.onrender.com/api/v1"
     }
   ],
   "security": [
@@ -19,27 +16,44 @@
     }
   ],
   "paths": {
-    "/plants": {
+    "/questions": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "description": "Retorna todas as perguntas disponíveis para o usuário ordenadas por envio, ou seja, recebe todas as suas (independentemente do status) e as já enviadas por outros usuários. O limite de perguntas retornadas é 500 por requisição.",
         "parameters": [
           {
-            "name": "limit",
+            "name": "page",
             "in": "query",
-            "description": "The maximum number of results to return",
+            "description": "Paginação dos 500 itens (0 a ∞)",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "description": "Filtrar pelo ID de um autor",
+            "schema": {
+              "type": "snowflake",
+              "example": "668199172276748328"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Pesquisar por texto",
+            "schema": {
+              "type": "string",
+              "example": "geladeira"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
+                  "type": "",
                   "items": {
                     "$ref": "#/components/schemas/Plant"
                   }
