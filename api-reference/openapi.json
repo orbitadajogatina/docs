@@ -51,6 +51,7 @@
         ],
         "responses": {
           "200": {
+            "description": "Todas as perguntas do usuário e já enviadas por outros usuários",
             "content": {
               "application/json": {
                 "schema": {
