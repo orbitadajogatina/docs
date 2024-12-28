@@ -27,7 +27,8 @@
             "schema": {
               "type": "integer",
               "format": "int32",
-              "example": "0"
+              "example": 0,
+              "minimum": 0
             }
           },
           {
