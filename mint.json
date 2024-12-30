@@ -1,5 +1,12 @@
 {
   "$schema": "https://mintlify.com/schema.json",
+  "versions": [
+    {
+      "name": "v1 (pt-BR Docs)",
+      "locale": "pt-BR",
+      "default": true
+    }
+  ],
   "name": "Pergunta do Dia API",
   "logo": {
     "light": "/assets/logo-with-text-alternative.png",
@@ -23,9 +30,10 @@
   },
   "navigation": [
     {
-      "group": "Documentação da API",
+      "group": "Primeiros Passos",
       "pages": [
         "introduction",
+        "status-and-emojis",
         "auth"
       ]
     },
@@ -33,16 +41,17 @@
       "group": "Perguntas",
       "pages": [
         "api-reference/endpoint/get-questions",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/get-question",
+        "api-reference/endpoint/post-question",
+        "api-reference/endpoint/patch-question",
+        "api-reference/endpoint/delete-question"
       ]
     },
     {
       "group": "Estatísticas",
       "pages": [
-        "api-reference/endpoint/get-questions",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/get-stats",
+        "api-reference/endpoint/get-queue"
       ]
     }
   ],

@@ -1,18 +1,21 @@
 ---
 title: 'Autenticação'
-description: 'Quem é você?'
+description: 'Quem é você e o que você pode acessar?'
 ---
 
 ## Obter uma chave
 Qualquer pessoa pode obter uma chave. Basta ir até o bot e utilizar o comando `/token`. Guarde a chave, pois caso você a perca, será necessário obter uma nova.
 <img src="/assets/step1.png"/>
-No momento, a chave tem formato `uuid`, entretanto, em breve será JWT. Quando essa mudança ocorrer, todos os desenvolvedores serão avisados.
-<Note>
+<Warning>
   Observe que, ao usar o comando, seu token antigo ficará inutilizável. Ou seja, todas as aplicações que o utilizavam não funcionarão até que você substitua para o novo token informado na mensagem do bot. Isso pode ser útil caso você tenha vazado sua chave ou tenha outro problema com ela.
+</Warning>
+<Note>
+No momento, a chave tem formato `uuid`, entretanto, em breve será `JWT`. Quando essa mudança ocorrer, todos os desenvolvedores serão avisados e suas chaves legado funcionarão por um bom tempo.
 </Note>
 
 ## Utilizando a chave
 Agora que já tem uma, lembre-se de sempre informá-la no header `Authorization` de todos os requests que você fizer.
+
 | Header | Valor |
-|--------|--------|
-| Authorization | `chave obtida` |
+|--------|-------|
+| Authorization | `Bearer [chave obtida]` |

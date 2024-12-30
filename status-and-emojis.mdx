@@ -1,0 +1,86 @@
+---
+title: 'Status e Emojis'
+description: 'Entenda o significado de cada status de uma pergunta e como utilizar, de forma avançada, os emojis.'
+---
+
+## Status
+O status de uma pergunta é uma propriedade no objeto que revela se ela ainda está sendo analisada ou se ela já foi recusada, aprovada ou enviada. Na API, cada status possui **um número**.
+#### Em análise (`0`)
+Essa pergunta está **aguardando revisão manual de um administrador**, que não sabe que foi você que enviou e que não sabe que foi enviada utilizando a API. Usuários com permissão de adminstrador não passam por essa análise e terão sua pergunta automaticamente com o status `2`.
+#### Recusada (`1`)
+Essa pergunta foi analisada por um adminstrador e ele **não a aprovou**. Você poderá ver o motivo na sua DM e recomenda-se que você a edite para tentar novamente sua aprovação.
+#### Aprovada (`2`)
+Essa pergunta foi analisada por um adminstrador e ele a **aprovou**. Isso significa que ela está pronta para ser enviada algum dia, mas ainda não foi.
+#### Enviada (`3`)
+Essa pergunta foi aprovada e **já foi enviada**. Isso também revela que ela já possui `messageID`, `sentAt` e `messageLink`. Além disso, ela agora está disponível para qualquer usuário obter informações sobre ela.
+
+Resumidamente:
+- `0`: Aguardando revisão de um administrador;
+- `1`: Recusada por um adminstrador; 
+- `2`: Aprovada por um adminstrador; 
+- `3`: Perguntada já enviada pelo bot.
+
+## Emojis
+### Enviando emojis
+A formatação que você usa para enviar opções no Discord é a mesma na API, o que permite aos usuários e desenvolvedores a usufruirem de recursos avançados, como `:thumbsup:` ou criar emojis personalizados usando imagens, além de precisar de menor complexidade. Então, as regras para criação de emojis se mantém:
+- **Criar emojis usando imagens aleatórias da internet com base na opção**
+
+    Use `$$` ao invés do emoji, assim: `$$ - Feijão carioca`. Isso pesquisará por imagens de "Feijão carioca" na internet e aleatoriamente uma será selecionada para ser o emoji.
+- **Criar emojis usando imagens aleatórias da internet com base em termos de consulta**
+
+    Use `$pesquisa$` ao invés do emoji, assim: `$salada de frutas$ - James`. Isso pesquisará por imagens de "Salada de frutas" na internet e aleatoriamente uma será selecionada para ser o emoji.
+- **Criar emojis usando link de uma imagem**
+
+    Use `$link$` ao invés do emoji, assim: `$http://pudim.com.br/pudim.jpg$ - Pudim`. A imagem do URL será o emoji.
+- **Enumerar automaticamente opções usando emojis (1 a 20)**
+
+    Use `##` ao invés do emoji, assim: `## - Lápis`.
+- **Usar emojis normais**
+
+    Adicione usando `:nomedoemoji:`, através do seu teclado ou `Windows + .`. Para emojis do servidor, é necessário informar o ID, [saiba mais](https://support.discord.com/hc/en-us/community/posts/360069335891-Get-Emoji-ID?page=1#community_comment_1500000646661). 
+<Tip>
+Essa mesma formatação de pesquisa de imagens para criar emojis também pode ser utilizada para pesquisar imagens que acompanham perguntas
+</Tip>
+### Recebendo emojis
+Ao olhar a response de um request, observa-se que a array que contém objetos de opções da pergunta, apresentam uma propriedade para emoji e outra para o texto da opção:
+```json
+"options": [
+    {
+        "emoji": "👎",
+        "text": "Não"
+    },
+    ...
+]
+```
+Eventualmente, você se deparará com uma pergunta que possui emojis criados com imagens da internet (`$$`) ou emojis enumerados (`##`). Os emojis criados através da enumeração já são automaticamente convertidos em emojis como 1️⃣, 2️⃣, etc. Entretanto, emojis criados com imagens da internet são exibidos da seguinte forma, facilitando a renderização do texto em Markdown: 
+```json
+"options": [
+    {
+        "emoji": "$[Imagem](https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png)$",
+        "text": "YouTube"
+    },
+    ...
+]
+```
+Porém, se você quiser obter apenas o link da imagem utilizada para criar o emoji, eis uma boa regular expression:
+```js
+/\$\[Imagem\]\((.*?)\)\$/
+```
+E um exemplo e sugestão de uso:
+<CodeGroup>
+
+```javascript JavaScript
+const index = 0;
+const currentOption = question.options[index];
+const currentOptionEmojiData = currentOption.emoji;
+const currentEmoji = currentOptionEmojiData[0] !== '$' ? currentOptionEmojiData : currentOptionEmojiData.match(/\$\[Imagem\]\((.*?)\)\$/)[1];
+```
+
+```python Python
+index = 0
+current_option = question['options'][index]
+current_option_emoji_data = current_option['emoji']
+current_emoji = current_option_emoji_data if current_option_emoji_data[0] != '$' else re.search(r'\$\[Imagem\]\((.*?)\)\$', current_option_emoji_data).group(1)
+```
+
+</CodeGroup>
