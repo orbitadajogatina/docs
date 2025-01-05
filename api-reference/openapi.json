@@ -3,7 +3,7 @@
   "info": {
     "title": "Pergunta do Dia Bot API",
     "description": "Uma API para interagir com o banco de dados do bot Pergunta do Dia.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "servers": [
     {
@@ -160,9 +160,250 @@
             }
           }
         }
+      },
+      "post": {
+        "description": "Crie e retorne uma nova pergunta com o mesmo padrão e requisitos que são exigidos no Discord. Caso você não seja administrador, sua pergunta será analisada.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Título da pergunta (a pergunta propriamente dita)",
+                    "example": "Você acredita em fantasmas?",
+                    "minLength": 5,
+                    "maxLength": 150
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Descrição da pergunta",
+                    "example": "Fantasma, na crença popular, é a alma ou espírito de uma pessoa falecida que pode aparecer para os vivos de maneira visível ou através de outras formas de manifestação",
+                    "nullable": true,
+                    "maxLength": 350
+                  },
+                  "options": {
+                    "type": "string",
+                    "description": "Opções da pergunta formatadas como \"Emoji - Texto\" por linha. De a 2 a 20 opções. Conheça recursos avançados em /emojis",
+                    "example": ":thumbsup: - Sim\n👎 - Não\n$fantasma mario$ - Apenas nos de videogames"
+                  },
+                  "footer": {
+                    "type": "string",
+                    "description": "Rodapé da pergunta",
+                    "example": "Se você acredita em outra entidade, comente na thread!",
+                    "nullable": true,
+                    "maxLength": 200
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL de uma imagem associada à pergunta ou pesquisar através do $$, conforme /emojis",
+                    "example": "https://e0.pxfuel.com/wallpapers/310/787/desktop-wallpaper-julieta-ricarte-glasses-sunglases-fantasma-thumbnail.jpg",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "title",
+                  "options"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resposta com os detalhes da pergunta criada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID da pergunta criada",
+                      "example": 976
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data e hora em que a pergunta foi criada",
+                      "example": "2024-12-29T19:48:17.978418+00:00"
+                    },
+                    "question": {
+                      "type": "string",
+                      "description": "A pergunta, propriamente dita",
+                      "example": "Você acredita em fantasmas?"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Descrição da pergunta",
+                      "example": "Fantasma, na crença popular, é a alma ou espírito de uma pessoa falecida que pode aparecer para os vivos de maneira visível ou através de outras formas de manifestação",
+                      "nullable": true
+                    },
+                    "footer": {
+                      "type": "string",
+                      "description": "Rodapé da pergunta",
+                      "example": "Se você acredita em outra entidade, comente na thread!",
+                      "nullable": true
+                    },
+                    "author": {
+                      "type": "string",
+                      "description": "ID (snowflake) do autor da pergunta",
+                      "example": "668199172276748328"
+                    },
+                    "options": {
+                      "type": "array",
+                      "description": "Opções da pergunta",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "emoji": {
+                            "type": "string",
+                            "description": "Emoji associado à opção",
+                            "example": "👍"
+                          },
+                          "text": {
+                            "type": "string",
+                            "description": "Texto da opção",
+                            "example": "Sim"
+                          }
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "enum": [
+                        0,
+                        1,
+                        2,
+                        3
+                      ],
+                      "description": "Status da pergunta. Veja a seção \"Status e Emojis\"",
+                      "example": 2
+                    },
+                    "sentAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true,
+                      "description": "Data e hora em que a pergunta foi enviada",
+                      "example": null
+                    },
+                    "image": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true,
+                      "description": "URL da imagem associada à pergunta",
+                      "example": "https://e0.pxfuel.com/wallpapers/310/787/desktop-wallpaper-julieta-ricarte-glasses-sunglases-fantasma-thumbnail.jpg"
+                    },
+                    "messageID": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "ID (snowflake) da mensagem enviada com a pergunta",
+                      "example": null
+                    },
+                    "similarQuestions": {
+                      "type": "array",
+                      "nullable": true,
+                      "description": "Caso você seja administrador, você receberá uma lista com perguntas semelhantes",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID da pergunta semelhante",
+                            "example": 905
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data e hora em que a pergunta semelhante foi criada",
+                            "example": "2024-12-23T01:13:32.340666+00:00"
+                          },
+                          "question": {
+                            "type": "string",
+                            "description": "A pergunta da pergunta semelhante",
+                            "example": "Você acredita em signos?"
+                          },
+                          "description": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Descrição da pergunta semelhante",
+                            "example": ""
+                          },
+                          "footer": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Rodapé da pergunta semelhante",
+                            "example": ""
+                          },
+                          "options": {
+                            "type": "array",
+                            "description": "Opções da pergunta semelhante",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "emoji": {
+                                  "type": "string",
+                                  "description": "Emoji associado à opção",
+                                  "example": "👍"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "description": "Texto da opção",
+                                  "example": "Sim, eu acredito em signos"
+                                }
+                              }
+                            }
+                          },
+                          "status": {
+                            "type": "integer",
+                            "enum": [
+                              0,
+                              1,
+                              2,
+                              3
+                            ],
+                            "description": "Status da pergunta semelhante. Veja a seção \"Status e Emojis\".",
+                            "example": 2
+                          },
+                          "sentAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "description": "Data e hora em que a pergunta semelhante foi enviada",
+                            "example": null
+                          },
+                          "image": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL da imagem associada à pergunta semelhante",
+                            "example": null
+                          },
+                          "messageID": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "ID (snowflake) da mensagem enviada com a pergunta semelhante",
+                            "example": null
+                          },
+                          "search_score": {
+                            "type": "number",
+                            "description": "Pontuação de similaridade entre as perguntas",
+                            "example": 0.5
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/question/{id}": {
+    "/questions/{id}": {
       "get": {
         "description": "Retorna uma pergunta com base no ID dela ou o ID da mensagem. Só é possível retornar perguntas suas, independente do status, ou perguntas de outros usuários já enviadas.",
         "parameters": [
@@ -264,7 +505,7 @@
                           },
                           "votes": {
                             "type": "integer",
-                            "description": "Quantidade de votos que a opção recebeu",
+                            "description": "Quantidade de votos que a opção recebeu. Essa informação pode levar até 30 minutos para ser atualizada.",
                             "example": 9
                           }
                         }
@@ -314,7 +555,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "description": "Edite e retorne a pergunta com base com base no ID dela ou o ID da mensagem. Utiliza-se o mesmo padrão e requisitos que são exigidos no Discord e você deve reenviar todos os campos, independentemente de terem sido alterados ou não. Caso você não seja administrador, sua edição será analisada.",
         "parameters": [
           {
@@ -588,61 +829,12 @@
         }
       }
     },
-    "/question": {
-      "post": {
-        "description": "Crie e retorne uma nova pergunta com o mesmo padrão e requisitos que são exigidos no Discord. Caso você não seja administrador, sua pergunta será analisada.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "type": "string",
-                    "description": "Título da pergunta (a pergunta propriamente dita)",
-                    "example": "Você acredita em fantasmas?",
-                    "minLength": 5,
-                    "maxLength": 150
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Descrição da pergunta",
-                    "example": "Fantasma, na crença popular, é a alma ou espírito de uma pessoa falecida que pode aparecer para os vivos de maneira visível ou através de outras formas de manifestação",
-                    "nullable": true,
-                    "maxLength": 350
-                  },
-                  "options": {
-                    "type": "string",
-                    "description": "Opções da pergunta formatadas como \"Emoji - Texto\" por linha. De a 2 a 20 opções. Conheça recursos avançados em /emojis",
-                    "example": ":thumbsup: - Sim\n👎 - Não\n$fantasma mario$ - Apenas nos de videogames"
-                  },
-                  "footer": {
-                    "type": "string",
-                    "description": "Rodapé da pergunta",
-                    "example": "Se você acredita em outra entidade, comente na thread!",
-                    "nullable": true,
-                    "maxLength": 200
-                  },
-                  "image": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "URL de uma imagem associada à pergunta ou pesquisar através do $$, conforme /emojis",
-                    "example": "https://e0.pxfuel.com/wallpapers/310/787/desktop-wallpaper-julieta-ricarte-glasses-sunglases-fantasma-thumbnail.jpg",
-                    "nullable": true
-                  }
-                },
-                "required": [
-                  "title",
-                  "options"
-                ]
-              }
-            }
-          }
-        },
+    "/questions/latest": {
+      "get": {
+        "description": "Retorna a última pergunta enviada pelo bot.",
         "responses": {
           "200": {
-            "description": "Resposta com os detalhes da pergunta criada",
+            "description": "Resposta com os detalhes da pergunta",
             "content": {
               "application/json": {
                 "schema": {
@@ -650,52 +842,85 @@
                   "properties": {
                     "id": {
                       "type": "integer",
-                      "description": "ID da pergunta criada",
-                      "example": 976
+                      "description": "ID da pergunta",
+                      "example": 101
                     },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time",
                       "description": "Data e hora em que a pergunta foi criada",
-                      "example": "2024-12-29T19:48:17.978418+00:00"
+                      "example": "2022-12-17T19:03:23+00:00"
                     },
                     "question": {
                       "type": "string",
                       "description": "A pergunta, propriamente dita",
-                      "example": "Você acredita em fantasmas?"
+                      "example": "Quais são seus navegadores principais (mobile e PC)?"
                     },
                     "description": {
                       "type": "string",
+                      "nullable": true,
                       "description": "Descrição da pergunta",
-                      "example": "Fantasma, na crença popular, é a alma ou espírito de uma pessoa falecida que pode aparecer para os vivos de maneira visível ou através de outras formas de manifestação",
-                      "nullable": true
+                      "example": null
                     },
                     "footer": {
                       "type": "string",
+                      "nullable": true,
                       "description": "Rodapé da pergunta",
-                      "example": "Se você acredita em outra entidade, comente na thread!",
-                      "nullable": true
+                      "example": "Comente na thread em qual plataforma você usa cada!"
                     },
                     "author": {
-                      "type": "string",
-                      "description": "ID (snowflake) do autor da pergunta",
-                      "example": "668199172276748328"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "ID (snowflake) do autor da pergunta",
+                          "example": "668199172276748328"
+                        },
+                        "username": {
+                          "type": "string",
+                          "description": "Nome de usuário do autor",
+                          "example": "enzoyakisobi"
+                        },
+                        "globalName": {
+                          "type": "string",
+                          "description": "Nome de exibição do autor",
+                          "example": "Enzo 文字Yakisobi何でも"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "URL do avatar do autor",
+                          "example": "https://cdn.discordapp.com/avatars/668199172276748328/3b753acae1fad895d66e39de5483efee.webp"
+                        },
+                        "displayAvatarURL": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "URL do avatar exibido do autor",
+                          "example": "https://cdn.discordapp.com/avatars/668199172276748328/3b753acae1fad895d66e39de5483efee.webp"
+                        }
+                      }
                     },
                     "options": {
                       "type": "array",
                       "description": "Opções da pergunta",
+                      "minItems": 2,
                       "items": {
                         "type": "object",
                         "properties": {
                           "emoji": {
                             "type": "string",
                             "description": "Emoji associado à opção",
-                            "example": "👍"
+                            "example": "$[Imagem](https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png)$"
                           },
                           "text": {
                             "type": "string",
                             "description": "Texto da opção",
-                            "example": "Sim"
+                            "example": "Chrome"
+                          },
+                          "votes": {
+                            "type": "integer",
+                            "description": "Quantidade de votos que a opção recebeu. Essa informação pode levar até 30 minutos para ser atualizada.",
+                            "example": 9
                           }
                         }
                       }
@@ -708,120 +933,34 @@
                         2,
                         3
                       ],
-                      "description": "Status da pergunta. Veja a seção \"Status e Emojis\"",
-                      "example": 2
+                      "description": "Status da pergunta. Veja a seção \"Status e Emojis\".",
+                      "example": 3
                     },
                     "sentAt": {
                       "type": "string",
                       "format": "date-time",
-                      "nullable": true,
                       "description": "Data e hora em que a pergunta foi enviada",
-                      "example": null
+                      "example": "2022-12-17T20:00:18",
+                      "nullable": true
                     },
                     "image": {
                       "type": "string",
-                      "format": "uri",
                       "nullable": true,
                       "description": "URL da imagem associada à pergunta",
-                      "example": "https://e0.pxfuel.com/wallpapers/310/787/desktop-wallpaper-julieta-ricarte-glasses-sunglases-fantasma-thumbnail.jpg"
+                      "example": null
                     },
                     "messageID": {
                       "type": "string",
-                      "nullable": true,
                       "description": "ID (snowflake) da mensagem enviada com a pergunta",
-                      "example": null
+                      "example": "1053808867693301871",
+                      "nullable": true
                     },
-                    "similarQuestions": {
-                      "type": "array",
-                      "nullable": true,
-                      "description": "Caso você seja administrador, você receberá uma lista com perguntas semelhantes",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer",
-                            "description": "ID da pergunta semelhante",
-                            "example": 905
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Data e hora em que a pergunta semelhante foi criada",
-                            "example": "2024-12-23T01:13:32.340666+00:00"
-                          },
-                          "question": {
-                            "type": "string",
-                            "description": "A pergunta da pergunta semelhante",
-                            "example": "Você acredita em signos?"
-                          },
-                          "description": {
-                            "type": "string",
-                            "nullable": true,
-                            "description": "Descrição da pergunta semelhante",
-                            "example": ""
-                          },
-                          "footer": {
-                            "type": "string",
-                            "nullable": true,
-                            "description": "Rodapé da pergunta semelhante",
-                            "example": ""
-                          },
-                          "options": {
-                            "type": "array",
-                            "description": "Opções da pergunta semelhante",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "emoji": {
-                                  "type": "string",
-                                  "description": "Emoji associado à opção",
-                                  "example": "👍"
-                                },
-                                "text": {
-                                  "type": "string",
-                                  "description": "Texto da opção",
-                                  "example": "Sim, eu acredito em signos"
-                                }
-                              }
-                            }
-                          },
-                          "status": {
-                            "type": "integer",
-                            "enum": [
-                              0,
-                              1,
-                              2,
-                              3
-                            ],
-                            "description": "Status da pergunta semelhante. Veja a seção \"Status e Emojis\".",
-                            "example": 2
-                          },
-                          "sentAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "nullable": true,
-                            "description": "Data e hora em que a pergunta semelhante foi enviada",
-                            "example": null
-                          },
-                          "image": {
-                            "type": "string",
-                            "nullable": true,
-                            "description": "URL da imagem associada à pergunta semelhante",
-                            "example": null
-                          },
-                          "messageID": {
-                            "type": "string",
-                            "nullable": true,
-                            "description": "ID (snowflake) da mensagem enviada com a pergunta semelhante",
-                            "example": null
-                          },
-                          "search_score": {
-                            "type": "number",
-                            "description": "Pontuação de similaridade entre as perguntas",
-                            "example": 0.5
-                          }
-                        }
-                      }
+                    "messageLink": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Link direto para a mensagem enviada no Discord",
+                      "example": "https://discord.com/channels/748147574481092617/862812086819487754/1053808867693301871",
+                      "nullable": true
                     }
                   }
                 }
@@ -963,6 +1102,52 @@
                           }
                         }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "description": "Retorna informações sobre o usuário dono do token.",
+        "responses": {
+          "200": {
+            "description": "Informações do usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID (snowflake) do usuário",
+                      "example": "668199172276748328"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Nome de usuário",
+                      "example": "enzoyakisobi"
+                    },
+                    "globalName": {
+                      "type": "string",
+                      "description": "Nome de exibição global do usuário",
+                      "example": "Enzo 文字Yakisobi何でも"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL do avatar do usuário",
+                      "example": "https://cdn.discordapp.com/avatars/668199172276748328/3b753acae1fad895d66e39de5483efee.webp"
+                    },
+                    "displayAvatarURL": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL do avatar exibido do usuário",
+                      "example": "https://cdn.discordapp.com/avatars/668199172276748328/3b753acae1fad895d66e39de5483efee.webp"
                     }
                   }
                 }
