@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://pergunta-do-dia.onrender.com/api/v1"
+      "url": "https://perguntadodia.squareweb.app/api/v1"
     }
   ],
   "security": [
